@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fraud Transaction Detection</title>
+</head>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9ed1d1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0f0303;
+            text-align: center;
+            font-weight: bolder;
+            text-decoration-line: underline;
+            background-color: rgb(68, 204, 216);
+            padding: 3px;
+    
+        }
+
+        form {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #f8f5f1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px; 
+            position:sticky; 
+        }
+
+        label {
+            font-style:normal;
+            display: block;
+            margin-bottom: 20px;
+            color: #131212;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 22px;
+            border-radius: 4px;
+            border: 2px solid #ccc;
+            text-align: center;
+
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            
+        }
+
+        h3 {
+            color: #333;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        p#predictions {
+            color: #890f0f;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3px;
+            background-color: rgb(65, 159, 182);
+            color: rgb(19, 4, 4);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <h1><strong>Fraud Transaction Detection</strong></h1>
+    <form id="prediction-form">
+        <label for="feature1">Feature V3:</label>
+        <input type="text" id="feature1" name="feature1"><br><br>
+
+        <label for="feature2">Feature V9:</label>
+        <input type="text" id="feature2" name="feature2"><br><br>
+
+        <label for="feature3">Feature V10:</label>
+        <input type="text" id="feature3" name="feature3"><br><br>
+
+        <label for="feature4">Feature V12:</label>
+        <input type="text" id="feature4" name="feature4"><br><br>
+
+        <label for="feature5">Feature V14:</label>
+        <input type="text" id="feature5" name="feature5"><br><br>
+
+        <label for="feature6">Feature V16:</label>
+        <input type="text" id="feature6" name="feature6"><br><br>
+
+        <label for="feature7">Feature V17:</label>
+        <input type="text" id="feature7" name="feature7"><br><br>
+
+        <label for="feature8">Feature V2:</label>
+        <input type="text" id="feature8" name="feature8"><br><br>
+
+        <label for="feature9">Feature V4:</label>
+        <input type="text" id="feature9" name="feature9"><br><br>
+
+        <label for="feature10">Feature V11:</label>
+        <input type="text" id="feature10" name="feature10"><br><br>
+
+        <input type="submit" value="Predict" >
+    </form>
+
+    <h3>Predictions:</h3>
+    <p id="predictions"></p>
+
+    <footer>
+        <p>Project by Dipti @TechnoHacks EduTech</p>
+    </footer>
+
+    <script>
+         function handleFormSubmit(event) {
+            event.preventDefault();
+    
+            const feature1 = document.getElementById('feature1').value;
+            const feature2 = document.getElementById('feature2').value;
+            const feature3 = document.getElementById('feature3').value;
+            const feature4 = document.getElementById('feature4').value;
+            const feature5 = document.getElementById('feature5').value;
+            const feature6 = document.getElementById('feature6').value;
+            const feature7 = document.getElementById('feature7').value;
+            const feature8 = document.getElementById('feature8').value;
+            const feature9 = document.getElementById('feature9').value;
+            const feature10 = document.getElementById('feature10').value;
+    
+            const formData = {
+                feature1: feature1,
+                feature2: feature2,
+                feature3: feature3,
+                feature4: feature4,
+                feature5: feature5,
+                feature6: feature6,
+                feature7: feature7,
+                feature8: feature8,
+                feature9: feature9,
+                feature10: feature10
+            };
+    
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const predictionsElement = document.getElementById('predictions');
+                predictionsElement.innerHTML = "The credit card transaction is " + data.predictions;
+            });
+        }
+    
+        // Attach form submission event listener
+        const form = document.getElementById('prediction-form');
+        form.addEventListener('submit', handleFormSubmit);
+        
+    </script>
+</body>
+</html>
